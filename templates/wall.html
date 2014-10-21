@@ -90,9 +90,21 @@
 <!-- jQuery v1.11.0 -->
 <script src="/static/js/bootstrap-3.2.0.min.js"></script>
 <!-- Bootstrap's JS -->
-<script src="/static/js/wall.js"></script>
-<!-- Message Wall JS -->
+<script src="/static/js/wall.js">
 
+</script>
+<!-- Message Wall JS -->
+<script>
+    $.get("/api/wall/list", function (response) {
+      // console.log(response["messages"]);
+      for (var i = 0; i < response["messages"].length; i++) {
+        $("ul#message-container").empty().append("<li class='list-group-item'>" + response["messages"][i]["message"] + "</li>");
+         
+    
+      }
+    });
+
+</script>
 </body>
 
 </html>
