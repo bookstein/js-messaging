@@ -4,6 +4,7 @@ $(document).ready(function () {
     // function, this code only gets run when the document finishing loading.
 
     $("#message-form").submit(handleFormSubmit);
+
 });
 
 
@@ -34,10 +35,19 @@ function addMessage(msg) {
         function (data) {
             console.log("addMessage: ", data);
             displayResultStatus(data.result);
+            getMessages();
         }
     );
 }
 
+function getMessages() {
+  $.get("/api/wall/list", function (response) {
+  $("ul#message-container").empty();
+  for (var i = 0; i < response["messages"].length; i++) {
+    $("ul#message-container").append("<li class='list-group-item'>" + response["messages"][i]["message"] + "</li>");
+    }
+  });
+}
 
 /**
  * This is a helper function that does nothing but show a section of the
@@ -67,4 +77,6 @@ function displayResultStatus(resultMsg) {
             $(self).slideUp();
         }, 2000);
     });
+
+    // getMessages();
 }
