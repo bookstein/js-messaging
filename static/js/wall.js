@@ -4,6 +4,7 @@ $(document).ready(function () {
     // function, this code only gets run when the document finishing loading.
 
     $("#message-form").submit(handleFormSubmit);
+    getMessages();
 
 });
 
@@ -28,24 +29,30 @@ function handleFormSubmit(evt) {
 /**
  * Makes AJAX call to the server and the message to it.
  */
+
+function formatMsg(response) {
+    $("ul#message-container").empty();
+    for (var i = 0; i < response["messages"].length; i++) {
+        $("ul#message-container").append("<li class='list-group-item'>" + response["messages"][i]["message"] + "</li>");
+    }
+}
+
 function addMessage(msg) {
     $.post(
         "/api/wall/add",
         {'m': msg},
         function (data) {
+            format_msg(data);
             console.log("addMessage: ", data);
             displayResultStatus(data.result);
-            getMessages();
+            // getMessages();
         }
     );
 }
 
 function getMessages() {
   $.get("/api/wall/list", function (response) {
-  $("ul#message-container").empty();
-  for (var i = 0; i < response["messages"].length; i++) {
-    $("ul#message-container").append("<li class='list-group-item'>" + response["messages"][i]["message"] + "</li>");
-    }
+    format_msg(response);
   });
 }
 
