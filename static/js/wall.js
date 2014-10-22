@@ -5,6 +5,13 @@ $(document).ready(function () {
 
     $("#message-form").submit(handleFormSubmit);
     getMessages();
+    // $("#clear-form").submit(clearMsgs);
+
+    $("#message-clear").click(function(e) {
+        $.get("api/wall/clear", function (response) {
+            formatMsg(response);
+        });
+    });
 
 });
 
@@ -42,19 +49,26 @@ function addMessage(msg) {
         "/api/wall/add",
         {'m': msg},
         function (data) {
-            format_msg(data);
+            formatMsg(data);
             console.log("addMessage: ", data);
             displayResultStatus(data.result);
-            // getMessages();
         }
     );
 }
 
 function getMessages() {
   $.get("/api/wall/list", function (response) {
-    format_msg(response);
+    formatMsg(response);
   });
 }
+
+// THIS DIDN'T WORK AT ALL
+    // function clearMsgs(evt) {
+        
+    //     // alert("I will act now!");
+    //     $.get("/api/wall/clear", formatMsg(response));
+    //     // console.log("cleared");
+    // }
 
 /**
  * This is a helper function that does nothing but show a section of the
