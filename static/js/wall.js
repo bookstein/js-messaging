@@ -30,6 +30,12 @@ function handleFormSubmit(evt) {
 
     // Reset the message container to be empty
     textArea.val("");
+
+    // prevent re-submission
+    $("#message-send").prop("disabled", true);
+    setTimeout(function() {
+        $("#message-send").prop("disabled", false);
+    }, 5000);
 }
 
 
