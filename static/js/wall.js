@@ -25,10 +25,6 @@ function handleFormSubmit(evt) {
 
     var textArea = $("#message");
     var msg = textArea.val();
-    // console.log(msg);
-
-    // var adjusted_msg = testUserInput(msg);
-
 
     console.log("handleFormSubmit: ", msg);
     addMessage(msg);
