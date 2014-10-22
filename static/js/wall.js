@@ -75,7 +75,7 @@ function formatMsg(response) {
 
 function addMessage(msg) {
     msg = $("<div>" + msg + "</div>");
-
+    msg = msg.text();
     $.post(
         "/api/wall/add",
         {'m': msg},
