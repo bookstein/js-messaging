@@ -57,18 +57,14 @@ function formatMsg(response) {
 }
 
 function addMessage(msg) {
-    console.log(msg);
 
     if (msg.length === 0) {
-        // alert("No message!");
         msg = "";
-        console.log(msg);
     }
 
     else if (msg.length > 1){
         msg = $("<div>" + msg + "</div>");
         msg = msg.text();
-        console.log(msg);
     }
 
     $.post(
@@ -76,14 +72,15 @@ function addMessage(msg) {
         {'m': msg},
         function (data) {
             // formatMsg(data);
-            console.log("addMessage: ", data);
+            // console.log("addMessage: ", data);
             if (data.result != "Message Received") {
                 //show red error message
                 $("#sent-result").removeClass("alert-info").addClass("alert-danger");
             }
-
+            else {
+                formatMsg(data);
+            }
             displayResultStatus(data.result);
-            formatMsg(data);
         }
         );
 
