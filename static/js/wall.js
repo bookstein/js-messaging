@@ -45,23 +45,6 @@ function handleFormSubmit(evt) {
 
 }
 
-// function testUserInput(msg) {
-//     var adjusted_input = .text();
-//     console.log(adjusted_input);
-//     return adjusted_input;
-// }
-//     for char in msg: 
-//         if char == <: 
-//             char = " "
-//             new_msg += char
-//         elif char == >: 
-//             char == " "
-//             new_msg += char
-
-//         else: 
-//             new_msg += char
-//         return new_msg
-// }
 /**
  * Makes AJAX call to the server and the message to it.
  */
@@ -74,17 +57,37 @@ function formatMsg(response) {
 }
 
 function addMessage(msg) {
-    msg = $("<div>" + msg + "</div>");
-    msg = msg.text();
+    console.log(msg);
+
+    if (msg.length === 0) {
+        // alert("No message!");
+        msg = "";
+        console.log(msg);
+    }
+
+    else if (msg.length > 1){
+        msg = $("<div>" + msg + "</div>");
+        msg = msg.text();
+        console.log(msg);
+    }
+
     $.post(
         "/api/wall/add",
         {'m': msg},
         function (data) {
-            formatMsg(data);
+            // formatMsg(data);
             console.log("addMessage: ", data);
+            if (data.result != "Message Received") {
+                //show red error message
+                $("#sent-result").removeClass("alert-info").addClass("alert-danger");
+            }
+
             displayResultStatus(data.result);
+            formatMsg(data);
         }
-    );
+        );
+
+
 }
 
 function getMessages() {
