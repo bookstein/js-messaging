@@ -11,6 +11,7 @@ $(document).ready(function () {
         $.get("api/wall/clear", function (response) {
             formatMsg(response);
         });
+
     });
 
 });
@@ -24,6 +25,10 @@ function handleFormSubmit(evt) {
 
     var textArea = $("#message");
     var msg = textArea.val();
+    // console.log(msg);
+
+    // var adjusted_msg = testUserInput(msg);
+
 
     console.log("handleFormSubmit: ", msg);
     addMessage(msg);
@@ -36,9 +41,27 @@ function handleFormSubmit(evt) {
     setTimeout(function() {
         $("#message-send").prop("disabled", false);
     }, 5000);
+
+
 }
 
+// function testUserInput(msg) {
+//     var adjusted_input = .text();
+//     console.log(adjusted_input);
+//     return adjusted_input;
+// }
+//     for char in msg: 
+//         if char == <: 
+//             char = " "
+//             new_msg += char
+//         elif char == >: 
+//             char == " "
+//             new_msg += char
 
+//         else: 
+//             new_msg += char
+//         return new_msg
+// }
 /**
  * Makes AJAX call to the server and the message to it.
  */
@@ -51,6 +74,8 @@ function formatMsg(response) {
 }
 
 function addMessage(msg) {
+    msg = $("<div>" + msg + "</div>");
+
     $.post(
         "/api/wall/add",
         {'m': msg},
